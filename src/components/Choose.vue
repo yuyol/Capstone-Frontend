@@ -133,10 +133,18 @@ export default {
           console.log(data);
         });
     },
+    fetchConnectedDevice() {
+      this.$http
+        .get("http://localhost:8081/fetchConnectedDevice")
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
   mounted() {
     // this.findAllDevices();
     this.findAllDeviceAndModel();
+    this.fetchConnectedDevice();
   },
 };
 </script>
