@@ -107,14 +107,22 @@ export default {
   },
   methods: {
     getDeviceInfo() {
-      this.deviceInfo.name = this.devices[this.deviceValue - 1].name;
-      this.deviceInfo.cpuFrequency =
-        this.devices[this.deviceValue - 1].cpuFrequency;
-      this.deviceInfo.sram = this.devices[this.deviceValue - 1].sram;
-      this.deviceInfo.flash = this.devices[this.deviceValue - 1].flash;
-      this.deviceInfo.cpuArch = this.devices[this.deviceValue - 1].cpuArch;
+      console.log(this.deviceValue);
+      const formData = new FormData();
+      formData.append("id", this.deviceValue);
+      this.$http
+        .post("http://localhost:8081/findDeviceInfo", formData)
+        .then((res) => {
+          console.log(res);
+          this.deviceInfo.name = res.data.name;
+          this.deviceInfo.cpuFrequency = res.data.cpuFrequency;
+          this.deviceInfo.sram = res.data.sram;
+          this.deviceInfo.flash = res.data.flash;
+          this.deviceInfo.cpuArch = res.data.cpuArch;
+        });
     },
     getModelInfo() {
+      console.log(this.modelValue);
       this.modelInfo.name = this.models[this.modelValue - 1].name;
     },
     findAllDevices() {
@@ -144,7 +152,7 @@ export default {
   mounted() {
     // this.findAllDevices();
     this.findAllDeviceAndModel();
-    this.fetchConnectedDevice();
+    console.log(this.devices);
   },
 };
 </script>

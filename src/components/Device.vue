@@ -193,7 +193,21 @@ export default {
         });
       this.dialogVisible = false;
     },
-    addDevice() {},
+    addDevice() {
+      const formData = new FormData();
+      formData.append("name", this.addDeviceInfo.name);
+      formData.append("cpuFrequency", this.addDeviceInfo.cpuFrequency);
+      formData.append("sram", this.addDeviceInfo.sram);
+      formData.append("flash", this.addDeviceInfo.flash);
+      formData.append("cpuArch", this.addDeviceInfo.cpuArch);
+      console.log(this.addDeviceInfo.name);
+      this.$http
+        .post("http://localhost:8081/addDevice", formData)
+        .then((res) => {
+          console.log(res);
+        });
+      this.addDialogVisible = false;
+    },
   },
   mounted() {
     this.findAllDevice();
